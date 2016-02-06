@@ -1,0 +1,3 @@
+%{"hashids": {:hex, :hashids, "2.0.1"},
+  "macaddr": {:git, "https://github.com/gleber/erlang-macaddr.git", "98e9831514b8d05e48bef5fcbbb8ee44d3a42ac0", []},
+  "mex": {:hex, :mex, "0.0.5"}}
