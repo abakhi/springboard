@@ -72,7 +72,7 @@ defmodule SpringBoard.ApiAuth do
       user: user,
       request_id: request_id,
       url: conn.request_path,
-      livemode: livemode?,
+      livemode?: livemode?,
       idempotency_key: idempotency_key
      }
   end
