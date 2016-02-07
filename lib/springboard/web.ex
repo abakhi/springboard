@@ -32,6 +32,14 @@ defmodule SpringBoard.Web do
   end
 
   def model do
+    quote do
+      # mixin props from base model
+      use SpringBoard.Model
+      alias Korba.Repo
+
+      import Ecto.Changeset
+      import Ecto.Query, only: [from: 1, from: 2]
+    end
   end
 
   def controller do

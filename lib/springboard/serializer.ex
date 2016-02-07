@@ -1,4 +1,4 @@
-defmodule Springboard.Serializer do
+defmodule SpringBoard.Serializer do
   @moduledoc "Base serializer"
   @api_version "v1"
 
