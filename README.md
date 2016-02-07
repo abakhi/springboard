@@ -1,6 +1,16 @@
 # Springboard
 
-**TODO: Add description**
+## TODO
+
+- Documentation
+- Tests
+- CI build status/badge
+- Sample/demo app using SpringBoard
+- Make models ultra-light
+- Add event bus
+- Phoenix mixins in web.ex
+- Phone number parser
+- Publish on hex.pm
 
 ## Installation
 
@@ -17,4 +27,3 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
         def application do
           [applications: [:springboard]]
         end
-
