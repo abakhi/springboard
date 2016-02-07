@@ -1,6 +1,15 @@
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
+import System, only: [get_env: 1]
+
+# Configure your database
+config :springboard, SpringBoard.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: get_env("DATABASE_USER"),
+  password: get_env("DATABASE_PASSWORD"),
+  database: get_env("DATABASE_NAME"),
+  hostname: get_env("DATABASE_HOSTNAME")
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

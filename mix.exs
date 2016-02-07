@@ -14,7 +14,15 @@ defmodule SpringBoard.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [applications: [
+          :logger,
+          :postgrex,
+          :ectoo,
+          :comeonin,
+          :tzdata,
+          :phoenix,
+        ]
+    ]
   end
 
   # Dependencies can be Hex packages:
@@ -29,6 +37,21 @@ defmodule SpringBoard.Mixfile do
   defp deps do
     [{:macaddr, github: "gleber/erlang-macaddr"},
      {:hashids, "~> 2.0"},
-     {:mex, "~> 0.0.5", only: :dev}]
+     {:mex, "~> 0.0.5", only: :dev},
+     {:vex, "~> 0.5.4"},
+     {:redix, "~> 0.2.1"},
+     {:remodel, "~> 0.0.1"},
+     {:comeonin, "~> 1.3.2"},
+     {:blaguth, github: "rpip/blaguth"},
+     {:macaddr, github: "gleber/erlang-macaddr"},
+     {:hashids, "~> 2.0"},
+     {:inflex, "~> 1.5.0"},
+     {:ectoo, "~> 0.0.4"},
+     {:erlman, github: "bbense/erlman", only: :dev},
+     {:scrivener, "~> 1.1.1"},
+     {:pigeon, github: "rpip/pigeon"},
+     {:exfirebase, "~> 0.4.0"},
+     {:phoenix, "~> 1.0.3"}
+    ]
   end
 end
