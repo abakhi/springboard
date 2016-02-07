@@ -1,6 +1,6 @@
 defmodule SpringBoard.ApiKey do
   use SpringBoard.Web, :model
-  alias SpringBoard.{Keygen, Repo}
+  alias SpringBoard.{KeyGen, Repo}
 
   @api_envs ~w(test live)
 
@@ -23,7 +23,7 @@ defmodule SpringBoard.ApiKey do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  @api_key_regex SpringBoard.app_env(:api_key_regex)
+  @api_key_regex ~r/[sp]k_(live|test)_(.*)/
 
   def changeset(model, params \\ :empty) do
     model
@@ -45,12 +45,12 @@ defmodule SpringBoard.ApiKey do
     case env do
       "test" ->
         changeset
-        |> put_change(:secret_key, Keygen.new_key(:test, :secret))
-        |> put_change(:public_key, Keygen.new_key(:test, :public))
+        |> put_change(:secret_key, KeyGen.new_key(:test, :secret))
+        |> put_change(:public_key, KeyGen.new_key(:test, :public))
       "live" ->
         changeset
-        |> put_change(:secret_key, Keygen.new_key(:live, :secret))
-        |> put_change(:public_key, Keygen.new_key(:live, :public))
+        |> put_change(:secret_key, KeyGen.new_key(:live, :secret))
+        |> put_change(:public_key, KeyGen.new_key(:live, :public))
     end
   end
 

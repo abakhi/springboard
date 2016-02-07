@@ -1,10 +1,10 @@
-defmodule SpringBoard.Keygen do
+defmodule SpringBoard.KeyGen do
   @moduledoc """
   Generates secret and public API keys for the given environment
 
   ### Examples
 
-       iex> {sk, pk} = SpringBoard.Keygen.new_keys("test")
+       iex> {sk, pk} = SpringBoard.KeyGen.new_keys("test")
   """
   import SpringBoard, only: [app_env: 1]
 
