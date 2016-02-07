@@ -148,16 +148,6 @@ defmodule SpringBoard.Model do
     end
   end
 
-  def format_phone_number(changeset) do
-    case changeset do
-      %Ecto.Changeset{changes: %{phone_number: number}} ->
-        number = Utils.format_phone_number(number)
-        Ecto.Changeset.put_change(changeset, :phone_number, number)
-      _ ->
-        changeset
-    end
-  end
-
   @doc "Insert a UUID into the model or changeset"
   def put_uuid(%Ecto.Changeset{} = changeset) do
     if changeset.model.__meta__.state == :built do

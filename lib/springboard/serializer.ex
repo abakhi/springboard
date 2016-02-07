@@ -1,4 +1,7 @@
 defmodule Springboard.Serializer do
+  @moduledoc "Base serializer"
+  @api_version "v1"
+
   defmacro __using__(_) do
     quote do
       use Remodel
@@ -18,7 +21,7 @@ defmodule Springboard.Serializer do
         [_h|[t|_]] =  Module.split(record.__struct__)
         resource = Inflex.pluralize(t) |> String.downcase
         object_id = id(record)
-        "v1/#{resource}/#{object_id}"
+        "#{@api_version}/#{resource}/#{object_id}"
       end
 
       def object(record) do

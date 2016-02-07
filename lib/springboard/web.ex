@@ -8,7 +8,7 @@ defmodule SpringBoard.Web do
       :env,
       :app,
       :user,
-      :livemode,
+      :livemode?,
       :request_id,
       :object,
       :url,
@@ -30,4 +30,24 @@ defmodule SpringBoard.Web do
     # "Controller" is of length 10
     String.slice(ctrl, 0, String.length(ctrl)-10)
   end
+
+  def model do
+  end
+
+  def controller do
+  end
+
+  def channel do
+  end
+
+  def view do
+  end
+
+  @doc """
+  When used, dispatch to the appropriate controller/view/etc.
+  """
+  defmacro __using__(which) when is_atom(which) do
+    apply(__MODULE__, which, [])
+  end
+
 end
