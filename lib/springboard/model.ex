@@ -1,5 +1,5 @@
 defmodule SpringBoard.Model do
-  alias SpringBoard.{Repo, UUID}
+  alias SpringBoard.UUID
   alias Ecto.Date
   import Ecto.Changeset, only: [add_error: 3, validate_change: 3]
 
@@ -61,7 +61,7 @@ defmodule SpringBoard.Model do
     end
   end
 
-  defmacro __using__(_) do
+  defmacro __using__(opts) do
     quote do
       use Ecto.Model
       use Ecto.Model.Callbacks
@@ -70,6 +70,9 @@ defmodule SpringBoard.Model do
       import SpringBoard.Model
       import SpringBoard, only: [app_env: 1, app_env: 2]
       alias __MODULE__
+
+      opts = unquote(opts)
+      @repo  opts[:repo]
 
       @primary_key {:id, :string, []}
       @foreign_key_type :string
@@ -81,7 +84,7 @@ defmodule SpringBoard.Model do
       """
       @spec by_id(Integer.t) :: Ecto.Model.t | nil | no_return
       def by_id(id) do
-        Repo.get(__MODULE__, id)
+        @repo.get(__MODULE__, id)
       end
 
       @doc """
@@ -89,7 +92,7 @@ defmodule SpringBoard.Model do
       """
       @spec all :: Ecto.Model.t | nil | no_return
       def all(preload_assocs \\ false) do
-        query = Repo.all(__MODULE__)
+        query = @repo.all(__MODULE__)
         if preload_assocs, do: maybe_preload(query), else: query
       end
 
@@ -97,7 +100,7 @@ defmodule SpringBoard.Model do
       Ecto *after_load* hook for preloading associated records
       """
       def maybe_preload(query) do
-        query |> Repo.preload(associations)
+        query |> @repo.preload(associations)
       end
 
       @doc """
@@ -123,26 +126,26 @@ defmodule SpringBoard.Model do
       @spec update(Ecto.Schema.t, map) :: Ecto.Schema.t
       def update(model_or_changeset, params) do
         cast(model_or_changeset, params, Map.keys(params), ~w())
-        |> Repo.update
+        |> @repo.update
       end
 
       @doc "Delete a #{__MODULE__}"
       def delete(id) do
-        Repo.get!(__MODULE__, id) |> Repo.delete!
+        @repo.get!(__MODULE__, id) |> @repo.delete!
       end
 
       @doc "Return's record at the given index"
       @spec at(integer) :: Ecto.Schema.t | nil | no_return
       def at(index) do
         from(x in __MODULE__, select: x, offset: ^index, limit: 1)
-        |> Repo.one
+        |> @repo.one
       end
 
-      def count, do: Ectoo.count(__MODULE__) |> Repo.one
-      def max(field), do: Ectoo.max(__MODULE__, field) |> Repo.one
-      def min(field), do: Ectoo.min(__MODULE__, field) |> Repo.one
-      def avg(field), do: Ectoo.avg(__MODULE__, field) |> Repo.one
-      def sum(field), do: Ectoo.sum(__MODULE__, field) |> Repo.one
+      def count, do: Ectoo.count(__MODULE__) |> @repo.one
+      def max(field), do: Ectoo.max(__MODULE__, field) |> @repo.one
+      def min(field), do: Ectoo.min(__MODULE__, field) |> @repo.one
+      def avg(field), do: Ectoo.avg(__MODULE__, field) |> @repo.one
+      def sum(field), do: Ectoo.sum(__MODULE__, field) |> @repo.one
 
       defoverridable [associations: 0, maybe_preload: 1, update: 2]
     end
@@ -195,9 +198,10 @@ defmodule SpringBoard.Model do
   def model_from_struct(struct) do
     {_prefix, source} = struct.__meta__.source
     base_model =
-    (source
-     |> Inflex.camelize
-     |> Inflex.singularize)
+      (source
+      |> Inflex.camelize
+      |> Inflex.singularize)
+
     Module.concat(Mix.Phoenix.base, base_model)
   end
 
@@ -206,7 +210,7 @@ defmodule SpringBoard.Model do
   def sanitize(struct) when is_map(struct) do
     modelmap =
     (if Map.has_key?(struct, :__meta__) do
-       fields= model_from_struct(struct).associations
+       fields = model_from_struct(struct).associations
        model =
        (struct
         |> Map.from_struct
@@ -255,7 +259,7 @@ defmodule SpringBoard.Model do
       model_name= Module.split(model) |> Enum.at(-1) |> String.downcase
       message = opts[:message] || "#{model_name} #{id} does not exist"
 
-      case Repo.get_by(model, id: id) do
+      case @repo.get_by(model, id: id) do
         nil ->
           [{field, message}]
         _ ->
