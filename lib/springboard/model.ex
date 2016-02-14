@@ -158,7 +158,7 @@ defmodule SpringBoard.Model do
         (Map.to_list(changeset.model)[:__struct__]
         |> UUID.generate_prefix)
 
-        Ecto.Changeset.put_change(changeset, :id, UUID.generate(prefix))
+      Ecto.Changeset.put_change(changeset, :id, UUID.generate(prefix))
     else
       changeset
     end

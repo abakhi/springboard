@@ -15,13 +15,19 @@ defmodule SpringBoard.UUID do
     generate_prefix(model.__struct__)
   end
 
+
   def generate_prefix(thing) do
   (thing
    |> do_generate_prefix
    |> String.downcase) <> "_"
   end
 
-  defp do_generate_prefix(word) do
+  defp do_generate_prefix(thing) do
+    word =
+      (thing
+      |> Module.split
+      |> Enum.at(-1))
+
     case String.length(word) do
       wc when wc <= 3 ->
         word
