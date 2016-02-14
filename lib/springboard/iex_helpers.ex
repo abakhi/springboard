@@ -4,7 +4,7 @@ defmodule SpringBoard.IExHelpers do
     IEx.Helpers.recompile
     app = app || :application.get_application
     # restart app
-    :ok = Application.ensure_started(app)
+    :ok = Application.ensure_all_started(app)
   end
 
   @doc "Lookup documentation on Erlang modules etc"
