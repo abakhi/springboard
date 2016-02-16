@@ -72,7 +72,8 @@ defmodule SpringBoard.Model do
       alias __MODULE__
 
       opts = unquote(opts)
-      @repo  opts[:repo]
+      @base_module  opts[:base]
+      @repo         opts[:repo]
 
       @primary_key {:id, :string, []}
       @foreign_key_type :string
@@ -111,7 +112,7 @@ defmodule SpringBoard.Model do
         changeset.types
         |> Enum.filter(fn {_k, v} -> is_tuple(v) && elem(v,0) == :assoc end)
         |> Enum.map(fn {k, _v} -> Inflex.camelize(k) |> Inflex.singularize end)
-        |> Enum.map(&(Module.concat(Mix.Phoenix.base, &1)))
+        |> Enum.map(&(Module.concat(@base_module , &1)))
       end
 
       @doc "Updates a record"
