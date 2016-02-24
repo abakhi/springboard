@@ -39,7 +39,7 @@ defmodule SpringBoard.Mixfile do
      {:hashids, "~> 2.0"},
      {:mex, "~> 0.0.5", only: :dev},
      {:vex, "~> 0.5.4"},
-     {:redix, "~> 0.2.1"},
+     {:redix, "~> 0.3.3"},
      {:remodel, "~> 0.0.1"},
      {:comeonin, "~> 1.3.2"},
      {:blaguth, github: "rpip/blaguth"},
